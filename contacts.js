@@ -4,14 +4,14 @@ const contactsName = require('./filePath');
 async function listContacts() {
     const info = await fs.readFile(contactsName);
     const allContacts = JSON.parse(info);
-    console.log(allContacts);
+    console.table(allContacts);
     return allContacts;
 }
 
 async function getContactById(contactId) {
     const contacts = await listContacts();
     const contact = contacts.find(contact => contact.id === contactId);
-    console.log(contact)
+    console.table(contact)
     return contact;
 }
 
@@ -19,14 +19,14 @@ async function removeContact(contactId) {
     const allContacts = await listContacts();
     const updatedContacts = await allContacts.filter(contact => contact.id !== contactId);
     await fs.writeFile(contactsName, JSON.stringify(updatedContacts));
-    console.log(updatedContacts);
+    console.table(updatedContacts);
 }
 
 
 async function addContact(name, email, phone ) {
     const data = {name,email,phone}
     const contacts = await listContacts();
-    const id = contacts.length + 1;
+    const id = contacts[contacts.length-1].id + 1;
     const newContact = { id, ...data };
     const isInList = contacts.find(contact => contact.phone === newContact.phone);
     if (isInList) {
@@ -36,7 +36,7 @@ async function addContact(name, email, phone ) {
     contacts.push(newContact);
     await fs.writeFile(contactsName, JSON.stringify(contacts));
     const updatedContactsList = await listContacts();
-    console.log(newContact);
+    console.table(newContact);
 }
 
 module.exports = {

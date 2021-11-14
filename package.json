@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Baklaikin/node-hw-01#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+    "nodemon": "^2.0.15",
+    "yargs": "^17.2.1"
+  },
+  "dependencies": {}
 }

@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const contactsName = require('./filePath');
+const { v4 } = require('uuid');
 
 async function listContacts() {
     const info = await fs.readFile(contactsName);
@@ -29,8 +30,7 @@ async function removeContact(contactId) {
 async function addContact(name, email, phone ) {
     const data = {name,email,phone}
     const contacts = await listContacts();
-    const id = contacts[contacts.length-1].id + 1;
-    const newContact = { id, ...data };
+    const newContact = { id: v4(), ...data };
     const isInList = contacts.find(contact => contact.phone === newContact.phone);
     if (isInList) {
         console.log('Contact is already in list');
